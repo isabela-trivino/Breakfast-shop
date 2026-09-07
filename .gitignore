@@ -1,0 +1,23 @@
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Editores
+.vscode/
+.idea/
+
+# Dependencias (por si en el futuro se añade tooling)
+node_modules/
+
+# Archivos temporales
+*.log
+
+# Skills de terceros instaladas localmente en esta carpeta (Impeccable,
+# Emil, taste skills, etc.) — son herramientas de otra app, no forman
+# parte del sitio y no deben publicarse en este repositorio.
+.agent/
+.agents/
+.claude/
+.gemini/
+.impeccable/
+skills-lock.json

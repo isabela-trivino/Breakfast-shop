@@ -1,0 +1,88 @@
+{
+  "moneda": "USD",
+  "simboloMoneda": "$",
+  "categorias": [
+    {
+      "id": "clasicos",
+      "nombre": "Desayunos Clásicos",
+      "items": [
+        {
+          "id": "d001",
+          "nombre": "Arepa con queso",
+          "descripcion": "Arepa venezolana asada rellena de queso blanco duro.",
+          "precio": 2.5,
+          "imagen": "assets/img/items/Arepa_reina_pepiada.jpg",
+          "disponible": true
+        },
+        {
+          "id": "d002",
+          "nombre": "Arepa reina pepiada",
+          "descripcion": "Arepa rellena de pollo mechado con aguacate y mayonesa casera.",
+          "precio": 3.5,
+          "imagen": "assets/img/items/Arepa_reina_pepiada.jpg",
+          "disponible": true
+        },
+        {
+          "id": "d003",
+          "nombre": "Empanada de queso",
+          "descripcion": "Empanada de maíz frita rellena de queso.",
+          "precio": 1.5,
+          "imagen": "assets/img/items/Arepa_reina_pepiada.jpg",
+          "disponible": true
+        }
+      ]
+    },
+    {
+      "id": "dulces",
+      "nombre": "Dulces y Panadería",
+      "items": [
+        {
+          "id": "d004",
+          "nombre": "Cachito de jamón",
+          "descripcion": "Pan de hojaldre relleno de jamón, horneado y crocante.",
+          "precio": 1.8,
+          "imagen": "assets/img/items/Arepa_reina_pepiada.jpg",
+          "disponible": true
+        },
+        {
+          "id": "d005",
+          "nombre": "Torta de chocolate (porción)",
+          "descripcion": "Porción individual de torta húmeda de chocolate.",
+          "precio": 2.0,
+          "imagen": "assets/img/items/Arepa_reina_pepiada.jpg",
+          "disponible": true
+        }
+      ]
+    },
+    {
+      "id": "bebidas",
+      "nombre": "Bebidas",
+      "items": [
+        {
+          "id": "d006",
+          "nombre": "Café con leche",
+          "descripcion": "Café negro con leche caliente, tamaño mediano.",
+          "precio": 1.5,
+          "imagen": "assets/img/items/Cafe_Con_Leche.jpg",
+          "disponible": true
+        },
+        {
+          "id": "d007",
+          "nombre": "Jugo de naranja natural",
+          "descripcion": "Jugo de naranja recién exprimido, tamaño mediano.",
+          "precio": 2.0,
+          "imagen": "assets/img/items/zumo-de-naranja-natural.jpg",
+          "disponible": true
+        },
+        {
+          "id": "d008",
+          "nombre": "Malta",
+          "descripcion": "Bebida de malta bien fría, lata 355ml.",
+          "precio": 1.2,
+          "imagen": "assets/img/items/Arepa_reina_pepiada.jpg",
+          "disponible": false
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tiendita de Desayunos — Menú y Pedidos por WhatsApp</title>
+  <meta name="description" content="Menú de desayunos. Elige tus items y envía tu pedido directo por WhatsApp." />
+
+  <!-- Open Graph / previsualización al compartir el link (hallazgo #10) —
+       clave porque el negocio depende de compartir este link por WhatsApp.
+       Actualiza estas 3 líneas si cambia el nombre/logo real de la tienda. -->
+  <meta property="og:title" content="Tiendita de Desayunos" />
+  <meta property="og:description" content="Elige tu desayuno y envía tu pedido directo por WhatsApp." />
+  <meta property="og:image" content="assets/img/og-image.png" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Color de la barra del navegador en Android/Chrome (hallazgo #16).
+       Debe coincidir con --color-primary de styles.css. -->
+  <meta name="theme-color" content="#F4A83D" />
+
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml" />
+  <!-- 🔖 "?v=4" fuerza a refrescar la caché del navegador. Súbelo (v=5, v=6…)
+       cada vez que publiques cambios en styles.css o en cualquier .js,
+       y sube el mismo número en js/app.js (ver comentario ahí — ahora es
+       solo 1 lugar en ese archivo, ver hallazgo #15 del AUDIT.md). -->
+  <link rel="stylesheet" href="css/styles.css?v=4" />
+</head>
+<body>
+
+  <!-- ============================ HEADER ============================ -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <img class="brand-logo" src="assets/img/logo.svg" alt="" width="48" height="48" />
+        <div class="brand-text">
+          <h1 id="store-name">Tiendita de Desayunos</h1>
+          <p id="store-tagline" class="tagline">Desayunos frescos, pedidos por WhatsApp</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ======================= NAV DE CATEGORÍAS ======================= -->
+  <nav class="category-nav" id="category-nav" aria-label="Categorías del menú">
+    <div class="container category-nav-inner" id="category-nav-list">
+      <!-- Los botones de categoría se generan por JS (app.js) -->
+    </div>
+  </nav>
+
+  <!-- ============================= MENÚ ============================= -->
+  <main class="container" id="menu-container">
+    <!-- role="status" queda en un elemento visualmente oculto: el texto se
+         sigue anunciando a lectores de pantalla mientras carga (hallazgo
+         #13), pero visualmente se ve el skeleton de abajo. -->
+    <p id="menu-status" class="sr-only" role="status">Cargando menú…</p>
+    <div id="menu-skeleton" class="menu-skeleton" aria-hidden="true">
+      <div class="skeleton-card">
+        <div class="skeleton-image"></div>
+        <div class="skeleton-line"></div>
+        <div class="skeleton-line is-short"></div>
+      </div>
+      <div class="skeleton-card">
+        <div class="skeleton-image"></div>
+        <div class="skeleton-line"></div>
+        <div class="skeleton-line is-short"></div>
+      </div>
+      <div class="skeleton-card">
+        <div class="skeleton-image"></div>
+        <div class="skeleton-line"></div>
+        <div class="skeleton-line is-short"></div>
+      </div>
+    </div>
+    <div id="menu-sections" hidden>
+      <!-- Las secciones por categoría (con sus items) se generan por JS -->
+    </div>
+  </main>
+
+  <!-- ===================== BOTÓN FLOTANTE CARRITO ===================== -->
+  <button
+    id="cart-fab"
+    class="cart-fab"
+    type="button"
+    aria-haspopup="dialog"
+    aria-controls="cart-panel"
+    aria-expanded="false"
+    aria-label="Ver pedido"
+  >
+    <span class="cart-fab-icon" aria-hidden="true">
+      <!-- Ícono de carrito en SVG (hallazgo #6): antes era un emoji 🛒 que
+           se ve distinto en cada sistema operativo y no hereda color. -->
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="9" cy="21" r="1"></circle>
+        <circle cx="20" cy="21" r="1"></circle>
+        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+      </svg>
+    </span>
+    <span class="cart-fab-label">Ver pedido</span>
+    <span class="cart-fab-count" id="cart-fab-count">0</span>
+  </button>
+
+  <!-- ========================= PANEL CARRITO ========================= -->
+  <div class="cart-overlay" id="cart-overlay" hidden></div>
+  <aside
+    class="cart-panel"
+    id="cart-panel"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="cart-panel-title"
+    tabindex="-1"
+    hidden
+  >
+    <div class="cart-panel-header">
+      <h2 id="cart-panel-title">Tu pedido</h2>
+      <button id="cart-close" class="icon-button" type="button" aria-label="Cerrar carrito">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <div class="cart-panel-body">
+      <p id="cart-empty-message" class="cart-empty-message">
+        Aún no has agregado ningún item del menú.
+      </p>
+      <ul id="cart-items-list" class="cart-items-list"></ul>
+    </div>
+
+    <div class="cart-panel-footer">
+      <div class="cart-total-row">
+        <span>Total</span>
+        <span id="cart-total">$0.00</span>
+      </div>
+      <button id="cart-whatsapp-btn" class="whatsapp-button" type="button" disabled>
+        <img src="assets/icons/whatsapp.svg" alt="" class="whatsapp-icon" aria-hidden="true" />
+        Enviar pedido por WhatsApp
+      </button>
+      <p class="cart-disclaimer">
+        Al presionar el botón se abrirá WhatsApp con tu pedido ya escrito.
+        Debes enviarlo tú mismo para confirmarlo con la tienda.
+      </p>
+    </div>
+  </aside>
+
+  <!-- ============================ FOOTER ============================ -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>© <span id="footer-year"></span> <span id="footer-store-name">Tiendita de Desayunos</span>. Hecho con ❤ para pedidos rápidos.</p>
+    </div>
+  </footer>
+
+  <!-- Plantilla reutilizable para una tarjeta de item del menú -->
+  <template id="menu-item-template">
+    <article class="menu-item" data-item-id="">
+      <img class="menu-item-image" src="" alt="" loading="lazy" />
+      <div class="menu-item-body">
+        <h3 class="menu-item-name"></h3>
+        <p class="menu-item-description"></p>
+        <div class="menu-item-footer">
+          <span class="menu-item-price"></span>
+          <div class="menu-item-actions">
+            <div class="qty-stepper" role="group" aria-label="Cantidad">
+              <button type="button" class="qty-btn qty-decrease" aria-label="Quitar uno">−</button>
+              <span class="qty-value" aria-live="polite">1</span>
+              <button type="button" class="qty-btn qty-increase" aria-label="Agregar uno">+</button>
+            </div>
+            <button type="button" class="add-button">Agregar</button>
+          </div>
+        </div>
+        <p class="menu-item-unavailable" hidden>No disponible hoy</p>
+      </div>
+    </article>
+  </template>
+
+  <!-- Plantilla reutilizable para una fila del carrito -->
+  <template id="cart-item-template">
+    <li class="cart-item" data-item-id="">
+      <div class="cart-item-info">
+        <span class="cart-item-name"></span>
+        <span class="cart-item-unit-price"></span>
+      </div>
+      <div class="cart-item-actions">
+        <div class="qty-stepper" role="group" aria-label="Cantidad">
+          <button type="button" class="qty-btn qty-decrease" aria-label="Quitar uno">−</button>
+          <span class="qty-value" aria-live="polite">1</span>
+          <button type="button" class="qty-btn qty-increase" aria-label="Agregar uno">+</button>
+        </div>
+        <span class="cart-item-subtotal"></span>
+        <button type="button" class="cart-item-remove" aria-label="Quitar item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </li>
+  </template>
+
+  <script type="module" src="js/app.js?v=4"></script>
+</body>
+</html>
