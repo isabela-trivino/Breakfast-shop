@@ -45,3 +45,11 @@ Los seis smoothies cuestan $3.50 y ya se pueden agregar al carrito. Cinco mockup
 ## Publicación autorizada
 
 El usuario autorizó subir esta copia al remoto existente, rama main, con GitHub Pages ya configurado. Se prepara commit de la versión revisada. Las fotos fuente y ediciones PNG quedan locales (ignoradas por Git); se publican los recursos finales utilizados. WhatsApp sigue deshabilitado hasta confirmar el número.
+
+## Correcciones posteriores
+
+Se quitaron los rótulos visibles de edición de imágenes, conservando procedencia en JSON y documentación. Título corregido: Waffles con huevo revuelto y aguacate. El usuario confirmó WhatsApp 584244000634: whatsappConfirmado true, pedidos habilitados. Se preparan propuestas de tipografía y encabezado sin verde; todavía no se aplica una opción nueva.
+
+## Tipografía y navegación elegidas
+
+El usuario eligió Fraunces para titulares + DM Sans para interfaz, con categorías redondeadas de la opción 3: fondo activo rosa empolvado #EAD9DD y texto ciruela #713849, sin verde en navegación. Encabezado crema continuo sin cintillo beige. Google Fonts se carga con display=swap; fallback Georgia/system-ui si no hay conexión. Botones principales jamaica.

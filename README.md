@@ -72,3 +72,11 @@ Descripciones corregidas por el usuario: lechuga; jamón (pavo o ahumado) o toci
 ## Smoothies: precios e imágenes confirmados
 
 Los seis smoothies cuestan $3.50 y ya se pueden agregar al carrito. Cinco mockups nuevos basados en la textura del proteico de fresa: vainilla, chocolate y frutas de fresa, parchita y mora. Rutas terminadas en -mockup.webp, 1200 × 900, con etiqueta Imagen ilustrativa. La foto editada del proteico de fresa se conserva. Limonada de Coco y Jamaica-Parchita siguen a $3. Prueba actualizada: vainilla + mora suman $7 en carrito y mensaje WhatsApp. Sin publicación ni push.
+
+## Correcciones posteriores
+
+Se quitaron los rótulos visibles de edición de imágenes, conservando procedencia en JSON y documentación. Título corregido: Waffles con huevo revuelto y aguacate. El usuario confirmó WhatsApp 584244000634: whatsappConfirmado true, pedidos habilitados. Se preparan propuestas de tipografía y encabezado sin verde; todavía no se aplica una opción nueva.
+
+## Tipografía y navegación elegidas
+
+El usuario eligió Fraunces para titulares + DM Sans para interfaz, con categorías redondeadas de la opción 3: fondo activo rosa empolvado #EAD9DD y texto ciruela #713849, sin verde en navegación. Encabezado crema continuo sin cintillo beige. Google Fonts se carga con display=swap; fallback Georgia/system-ui si no hay conexión. Botones principales jamaica.

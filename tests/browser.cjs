@@ -46,13 +46,13 @@ const server = http.createServer((req, res) => {
     await item.locator('.add-button').click();
     await page.locator('#cart-fab').click();
     assert.equal(await page.locator('#cart-total').innerText(),'$16.00');
-    assert(await page.locator('#cart-whatsapp-btn').isDisabled());
+    assert(await page.locator('#cart-whatsapp-btn').isEnabled());
     await page.locator('.cart-item .qty-increase').click();
     assert.equal(await page.locator('#cart-total').innerText(),'$24.00');
     assert(await page.locator('.cart-item .qty-increase').evaluate(n=>n===document.activeElement));
     await page.locator('#cart-close').focus();
     await page.keyboard.press('Shift+Tab');
-    assert(await page.locator('.cart-item-remove').evaluate(n=>n===document.activeElement));
+    assert(await page.locator('#cart-whatsapp-btn').evaluate(n=>n===document.activeElement));
     await page.keyboard.press('Tab');
     assert(await page.locator('#cart-close').evaluate(n=>n===document.activeElement));
     await page.keyboard.press('Escape');
@@ -72,11 +72,6 @@ const server = http.createServer((req, res) => {
     await page.screenshot({path:path.join(root,'tests/menu-mobile.png'),fullPage:true});
     await page.setViewportSize({width:1440,height:1000});
     await page.screenshot({path:path.join(root,'tests/menu-desktop.png'),fullPage:true});
-    // Activate only in the intercepted test response, never in the saved config.
-    await page.route('**/js/config.js', async route => {
-      const response=await route.fetch();
-      await route.fulfill({response,body:(await response.text()).replace('whatsappConfirmado: false','whatsappConfirmado: true')});
-    });
     await page.goto(url);
     await page.locator('[data-item-id="p001"] .add-button').click();
     await page.locator('[data-item-id="f003"] .add-button').click();
@@ -85,6 +80,7 @@ const server = http.createServer((req, res) => {
     await page.locator('#cart-whatsapp-btn').click();
     const link = new URL(await page.evaluate(()=>window.testWhatsApp));
     assert.equal(link.hostname,'wa.me');
+    assert.equal(link.pathname,'/584244000634');
     assert(link.searchParams.get('text').includes('Total: $7.00'));
     assert(link.searchParams.get('text').includes('1x Smoothie Proteico de Vainilla'));
     assert(link.searchParams.get('text').includes('1x Smoothie de Mora'));

@@ -21,7 +21,7 @@
   --color-accent: #873E4C;
   --color-whatsapp: #496044;
   --color-border: #DED1BF;
-  --color-sage: #B9C5AC;
+  --color-category-active: #EAD9DD;
   --color-danger: #963B33;
 
   /* Tokens añadidos (hallazgo #9): texto/fondos que antes estaban
@@ -35,7 +35,7 @@
   --color-skeleton-shine: #F5EEE3;
 
   /* --- Tipografía --- */
-  --font-base: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-base: "DM Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-size-base: 16px;
 
   /* --- Espaciado --- */
@@ -165,8 +165,8 @@ h1, h2, h3, p { margin: 0; }
 }
 .category-nav-button:active { transform: scale(0.96); }
 .category-nav-button[aria-current="true"] {
-  background: var(--color-sage);
-  border-color: var(--color-sage);
+  background: var(--color-category-active);
+  border-color: var(--color-category-active);
   color: var(--color-text);
 }
 
@@ -462,16 +462,16 @@ h1, h2, h3, p { margin: 0; }
 }
 
 /* Identidad elegida: arena y salvia; jamaica destaca las acciones principales. */
-h1, h2, .menu-item-name { font-family: Georgia, "Times New Roman", serif; font-weight: 400; text-wrap: balance; }
+h1, h2, .menu-item-name { font-family: "Fraunces", Georgia, serif; font-weight: 500; text-wrap: balance; }
 button { color: inherit; }
-:focus-visible { outline: 3px solid var(--color-whatsapp); outline-offset: 4px; }
+:focus-visible { outline: 3px solid var(--color-primary); outline-offset: 4px; }
 .skip-link { position: fixed; top: 8px; left: 8px; z-index: 40; padding: 12px; background: var(--color-surface); color: var(--color-text); transform: translateY(-150%); }
 .skip-link:focus { transform: none; }
 .header-inner { padding-block: 24px; }
 .brand-text h1 { font-size: clamp(1.4rem, 3vw, 2rem); }
 .brand-logo { background: #DED1BF; }
 .menu-intro { padding: 28px 0 40px; max-width: 640px; }
-.eyebrow { color: var(--color-whatsapp); font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; }
+.eyebrow { color: var(--color-primary); font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; }
 .menu-intro h2 { font-size: clamp(2.5rem, 6vw, 4.3rem); line-height: 1.08; letter-spacing: -.045em; margin: 12px 0 20px; }
 .menu-intro > p:last-child { color: var(--color-text-muted); max-width: 440px; }
 .category-nav-button { min-height: 44px; min-width: 44px; text-decoration: none; display: inline-flex; align-items: center; border-radius: 6px; }
@@ -524,3 +524,10 @@ button { color: inherit; }
 
 /* Fotografías completas: mismo encuadre 4:3 en teléfono y escritorio. */
 .menu-item-image { aspect-ratio: 4 / 3; height: auto; }
+
+/* Fraunces + DM Sans, categorías redondeadas en rosa empolvado. */
+.site-header { background: var(--color-bg); border-bottom: 0; }
+.category-nav { border-bottom: 0; }
+.category-nav-button { border: 0; border-radius: 999px; background: transparent; padding: 12px 18px; }
+.category-nav-button[aria-current="true"] { background: var(--color-category-active); color: #713849; }
+@media (hover: hover) { .category-nav-button:hover { background: #F2E7E9; } }

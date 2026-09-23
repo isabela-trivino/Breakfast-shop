@@ -14,11 +14,10 @@ export const STORE_CONFIG = {
 
   // Número de WhatsApp SIN el símbolo "+", sin espacios ni guiones.
   // Formato: código de país + número. Ejemplo Venezuela: 584121234567
-  // ⚠️ Este es un número de EJEMPLO, reemplázalo por el número real
-  // de la tienda antes de publicar el sitio.
+  // Número confirmado por el usuario.
   whatsappNumero: "584244000634",
   // Cambiar a true solo después de confirmar el número real con la tienda.
-  whatsappConfirmado: false,
+  whatsappConfirmado: true,
 
   // Mensaje que aparece al inicio del pedido enviado por WhatsApp.
   mensajeSaludo: "¡Hola! Quisiera hacer el siguiente pedido:",

@@ -136,12 +136,6 @@ function renderMenuItem(item) {
   const img = node.querySelector(".menu-item-image");
   img.src = item.imagen || "assets/img/items/placeholder.svg";
   img.alt = img.src.endsWith("placeholder.svg") ? "Foto pendiente" : item.imagenIlustrativa ? `Imagen ilustrativa de ${item.nombre}` : item.nombre;
-  if (item.imagenIlustrativa || item.imagenEditada) {
-    const caption = document.createElement("p");
-    caption.className = "image-caption";
-    caption.textContent = item.imagenEditada ? "Foto con fondo editado" : "Imagen ilustrativa";
-    img.after(caption);
-  }
   img.addEventListener("error", () => { img.src = "assets/img/items/placeholder.svg"; }, { once: true });
 
   node.querySelector(".menu-item-name").textContent = item.nombre;
