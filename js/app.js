@@ -1,20 +1,8 @@
-// ==========================================================================
-// app.js — Punto de entrada: conecta config + menu + cart + whatsapp con el DOM
-//
-// 🔖 VERSIONADO DE CACHÉ (hallazgo #15 del AUDIT.md): antes había que
-// sincronizar "?v=" en 6 lugares distintos. Ahora los imports usan
-// import() dinámico con UNA sola constante (APP_VERSION, abajo), así que
-// solo quedan 2 lugares por sincronizar cuando publiques un cambio de
-// CSS/JS: esta constante, y el "?v=" de index.html (en el <link> y en el
-// <script type="module">).
-// ==========================================================================
-
-const APP_VERSION = "4";
-
-const { STORE_CONFIG } = await import(`./config.js?v=${APP_VERSION}`);
-const { loadMenu } = await import(`./menu.js?v=${APP_VERSION}`);
-const { Cart } = await import(`./cart.js?v=${APP_VERSION}`);
-const { buildOrderMessage, buildWhatsAppLink } = await import(`./whatsapp.js?v=${APP_VERSION}`);
+// Módulos nativos: sin versiones manuales duplicadas (ver README).
+import { STORE_CONFIG } from "./config.js";
+import { loadMenu } from "./menu.js";
+import { Cart } from "./cart.js";
+import { buildOrderMessage, buildWhatsAppLink } from "./whatsapp.js";
 
 const PANEL_ANIMATION_MS = 260; // debe coincidir con --transition-panel en styles.css
 const BUMP_ANIMATION_MS = 220;
@@ -25,6 +13,8 @@ let simboloMoneda = STORE_CONFIG.simboloMonedaPorDefecto;
 // Elemento que tenía el foco antes de abrir el carrito, para devolvérselo
 // al cerrar (hallazgo #2 — manejo de foco de teclado).
 let lastFocusedBeforeCart = null;
+let closeTimer;
+const backgroundElements = [...document.body.children].filter(node => node.matches("header, nav, main, footer, #cart-fab, .skip-link"));
 
 // --- Referencias al DOM ---
 const el = {
@@ -61,6 +51,8 @@ async function init() {
     const menu = await loadMenu();
     simboloMoneda = menu.simboloMoneda || STORE_CONFIG.simboloMonedaPorDefecto;
     renderMenu(menu);
+    renderCart(cart.getState());
+    wireCategoryScroll();
     el.menuSkeleton.hidden = true;
     el.menuSections.hidden = false;
     el.menuStatus.textContent = "Menú cargado.";
@@ -69,7 +61,12 @@ async function init() {
     el.menuSkeleton.hidden = true;
     el.menuStatus.classList.remove("sr-only");
     el.menuStatus.textContent =
-      "No se pudo cargar el menú. Si estás probando el sitio localmente, recuerda abrirlo con un servidor (ver README) y no directamente con doble clic.";
+      "No pudimos cargar el menú. Comprueba tu conexión y vuelve a intentarlo.";
+    const retry = document.createElement("button");
+    retry.className = "add-button";
+    retry.textContent = "Reintentar";
+    retry.addEventListener("click", () => location.reload());
+    el.menuStatus.after(retry);
   }
 }
 
@@ -138,17 +135,28 @@ function renderMenuItem(item) {
 
   const img = node.querySelector(".menu-item-image");
   img.src = item.imagen || "assets/img/items/placeholder.svg";
-  img.alt = item.nombre;
+  img.alt = img.src.endsWith("placeholder.svg") ? "Foto pendiente" : item.imagenIlustrativa ? `Imagen ilustrativa de ${item.nombre}` : item.nombre;
+  if (item.imagenIlustrativa || item.imagenEditada) {
+    const caption = document.createElement("p");
+    caption.className = "image-caption";
+    caption.textContent = item.imagenEditada ? "Foto con fondo editado" : "Imagen ilustrativa";
+    img.after(caption);
+  }
+  img.addEventListener("error", () => { img.src = "assets/img/items/placeholder.svg"; }, { once: true });
 
   node.querySelector(".menu-item-name").textContent = item.nombre;
   node.querySelector(".menu-item-description").textContent = item.descripcion || "";
-  node.querySelector(".menu-item-price").textContent = `${simboloMoneda}${Number(item.precio).toFixed(2)}`;
+  const hasPrice = typeof item.precio === "number" && Number.isFinite(item.precio) && item.precio >= 0;
+  node.querySelector(".menu-item-price").textContent = hasPrice ? `${simboloMoneda}${item.precio.toFixed(2)}` : "Precio por confirmar";
 
   const qtyValue = node.querySelector(".qty-value");
   const decreaseBtn = node.querySelector(".qty-decrease");
   const increaseBtn = node.querySelector(".qty-increase");
   const addBtn = node.querySelector(".add-button");
 
+  decreaseBtn.setAttribute("aria-label", `Reducir cantidad de ${item.nombre}`);
+  increaseBtn.setAttribute("aria-label", `Aumentar cantidad de ${item.nombre}`);
+  addBtn.setAttribute("aria-label", `Agregar ${item.nombre} al pedido`);
   let cantidad = 1;
 
   decreaseBtn.addEventListener("click", () => {
@@ -161,6 +169,7 @@ function renderMenuItem(item) {
   });
   addBtn.addEventListener("click", () => {
     cart.addItem(item, cantidad);
+    document.getElementById("order-status").textContent = `${cantidad} × ${item.nombre} agregado al pedido.`;
     cantidad = 1;
     qtyValue.textContent = cantidad;
     // Hallazgo #1: antes esto abría el panel del carrito completo en cada
@@ -169,9 +178,11 @@ function renderMenuItem(item) {
     bumpCartFabCount();
   });
 
-  if (item.disponible === false) {
+  if (item.disponible === false || !hasPrice) {
     article.classList.add("is-unavailable");
+    [decreaseBtn, increaseBtn, addBtn].forEach(button => button.disabled = true);
     node.querySelector(".menu-item-unavailable").hidden = false;
+    if (!hasPrice) node.querySelector(".menu-item-unavailable").textContent = "Aún no se puede agregar al pedido";
   }
 
   return node;
@@ -226,6 +237,9 @@ function handleCartKeydown(evt) {
 }
 
 function openCartPanel() {
+  clearTimeout(closeTimer);
+  if (el.cartPanel.classList.contains("is-open")) return;
+  el.cartPanel.inert = false;
   lastFocusedBeforeCart = document.activeElement;
 
   el.cartPanel.hidden = false;
@@ -237,6 +251,7 @@ function openCartPanel() {
   el.cartOverlay.classList.add("is-open");
 
   el.cartFab.setAttribute("aria-expanded", "true");
+  backgroundElements.forEach(node => node.inert = true);
   document.body.style.overflow = "hidden"; // hallazgo #8: bloquear scroll de fondo
 
   document.addEventListener("keydown", handleCartKeydown);
@@ -247,6 +262,9 @@ function openCartPanel() {
 }
 
 function closeCartPanel() {
+  clearTimeout(closeTimer);
+  backgroundElements.forEach(node => node.inert = false);
+  el.cartPanel.inert = true;
   el.cartPanel.classList.remove("is-open");
   el.cartOverlay.classList.remove("is-open");
   el.cartFab.setAttribute("aria-expanded", "false");
@@ -255,7 +273,7 @@ function closeCartPanel() {
 
   // Esperar a que termine la transición de salida antes de ocultar de
   // verdad (con [hidden]) para que la animación se alcance a ver.
-  setTimeout(() => {
+  closeTimer = setTimeout(() => {
     el.cartPanel.hidden = true;
     el.cartOverlay.hidden = true;
   }, PANEL_ANIMATION_MS);
@@ -271,14 +289,20 @@ function closeCartPanel() {
 // --- Carrito: render ---
 
 function renderCart(state) {
+  const focused = document.activeElement;
+  const focusedId = focused.closest(".cart-item")?.dataset.itemId;
+  const focusedClass = ["qty-increase", "qty-decrease", "cart-item-remove"].find(name => focused.classList.contains(name));
   el.cartFabCount.textContent = state.totalItems;
   el.cartTotal.textContent = `${simboloMoneda}${state.totalPrice.toFixed(2)}`;
-  el.cartWhatsappBtn.disabled = state.items.length === 0;
+  el.cartWhatsappBtn.disabled = state.items.length === 0 || !STORE_CONFIG.whatsappConfirmado;
+  document.getElementById("whatsapp-status").hidden = STORE_CONFIG.whatsappConfirmado;
+  el.cartFab.setAttribute("aria-label", `Ver pedido, ${state.totalItems} productos, ${simboloMoneda}${state.totalPrice.toFixed(2)}`);
 
   el.cartItemsList.innerHTML = "";
 
   if (state.items.length === 0) {
     el.cartEmptyMessage.hidden = false;
+    if (focusedId) el.cartClose.focus();
     return;
   }
   el.cartEmptyMessage.hidden = true;
@@ -316,16 +340,38 @@ function renderCart(state) {
 
     el.cartItemsList.appendChild(node);
   });
+  if (focusedId) {
+    const row = [...el.cartItemsList.children].find(node => node.dataset.itemId === focusedId);
+    (row?.querySelector(`.${focusedClass}`) || el.cartClose).focus();
+  }
 }
 
 // --- Envío a WhatsApp ---
 
 function handleSendToWhatsApp() {
   const state = cart.getState();
-  if (state.items.length === 0) return;
+  if (state.items.length === 0 || !STORE_CONFIG.whatsappConfirmado) return;
 
   const mensaje = buildOrderMessage(state.items, state.totalPrice, STORE_CONFIG, simboloMoneda);
   const link = buildWhatsAppLink(STORE_CONFIG.whatsappNumero, mensaje);
 
   window.open(link, "_blank", "noopener");
+}
+
+// Sigue la sección que cruza el borde inferior de la navegación fija.
+function wireCategoryScroll() {
+  let scheduled = false;
+  const update = () => {
+    scheduled = false;
+    const sections = [...el.menuSections.children];
+    const top = document.getElementById("category-nav").getBoundingClientRect().bottom + 12;
+    let active = sections[0];
+    for (const section of sections) if (section.getBoundingClientRect().top <= top) active = section;
+    if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2) active = sections.at(-1);
+    if (active) setActiveCategory([...el.categoryNavList.children].find(link => link.hash === `#${active.id}`));
+  };
+  const schedule = () => { if (!scheduled) { scheduled = true; requestAnimationFrame(update); } };
+  window.addEventListener("scroll", schedule, { passive: true });
+  window.addEventListener("resize", schedule);
+  requestAnimationFrame(update);
 }

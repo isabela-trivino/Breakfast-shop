@@ -1,125 +1,74 @@
-# Tiendita de Desayunos — Menú web con pedidos por WhatsApp
+# BreakfastShop-GPT
 
-Sitio web estático (sin backend, sin build) donde los clientes ven el menú de
-desayunos, arman su pedido y lo envían directo al WhatsApp de la tienda con
-un solo botón.
+Menú estático con HTML, CSS, JavaScript y JSON, sin backend, pagos ni compilación. El carrito vive en memoria: se vacía al recargar. WhatsApp abre el pedido escrito; el cliente debe enviarlo y acordar disponibilidad con la tienda.
 
-## 1. Estructura del proyecto
+## Trabajar en esta copia
 
-```
-tiendita-desayunos/
-├── index.html              # Página única del sitio
-├── css/
-│   └── styles.css          # Estilos base (layout). Aquí se aplicará el diseño final.
-├── js/
-│   ├── config.js           # ⚙️ Datos editables: nombre, WhatsApp, mensajes
-│   ├── menu.js              # Carga data/menu.json
-│   ├── cart.js              # Estado del carrito (en memoria)
-│   ├── whatsapp.js          # Arma el mensaje y el link de wa.me
-│   └── app.js                # Conecta todo con el DOM (punto de entrada)
-├── data/
-│   └── menu.json            # 📋 "Base de datos" estática del menú (categorías, items, precios)
-├── assets/
-│   ├── img/
-│   │   ├── logo.svg          # Logo de la tienda (placeholder)
-│   │   └── items/             # Fotos de cada desayuno
-│   └── icons/                 # Íconos (whatsapp, favicon)
-├── .gitignore
-└── README.md
+Carpeta: C:\dev\BreakfastShop-GPT. Git ya está inicializado, rama main, commit inicial 0f8a355. Remoto: https://github.com/emilytrivino16-boop/Breakfast-shop.git. No ejecutar git init ni reemplazar esta copia. Revisar git status antes de trabajar. No publicar ni hacer push sin revisión del usuario.
+
+## Vista local
+
+Desde PowerShell en esta carpeta, si tienes Python instalado:
+
+```powershell
+python -m http.server 8000 --bind 127.0.0.1
 ```
 
-Es una estructura típica de sitio estático para GitHub Pages: no requiere
-Node, build ni framework. `index.html` es el punto de entrada.
+Abre http://127.0.0.1:8000. También puedes usar Live Server de VS Code. No abras index.html con doble clic: fetch necesita HTTP.
 
-## 2. Antes de publicar: datos a reemplazar
+## Editar contenido
 
-Todo lo que hay ahora mismo es **de ejemplo**. Antes de publicar el sitio,
-edita:
+- js/config.js: nombre, eslogan, saludo, cierre y número internacional sin + ni separadores. El número actual 584244000634 está marcado como ejemplo, NO confirmado. Una vez confirmado y corregido, cambia whatsappConfirmado a true para habilitar el botón.
+- data/menu.json: categorías e identificadores únicos; precio numérico sin símbolo, disponible true o false, nombre, descripción y ruta de imagen. Conservar moneda y simboloMoneda coherentes. Validar el JSON después de editarlo; no admite comentarios ni comas finales.
+- assets/img/items/: fotografías. Respetar mayúsculas de las rutas. Cinco productos conservan placeholder.svg para no mostrar una foto incorrecta.
+- css/styles.css: paleta en :root y ajustes visuales. Titulares Georgia y texto de interfaz del sistema, sin fuentes externas.
+- index.html: revisar también título inicial, textos de respaldo, metadatos sociales y theme-color al confirmar la identidad. Reemplazar logo, favicon y og-image.png de ejemplo; para compartir usar la URL pública absoluta de la imagen social cuando se conozca.
 
-1. **`js/config.js`**
-   - `whatsappNumero`: número real de la tienda, formato internacional sin
-     "+", sin espacios ni guiones. Ejemplo Venezuela: `584121234567`.
-   - `nombreTienda`, `eslogan`, `mensajeSaludo`, `mensajeCierre`: textos reales.
+## Paleta elegida
 
-2. **`data/menu.json`**
-   - Reemplaza las categorías e items de ejemplo por el menú real: `nombre`,
-     `descripcion`, `precio` (número, sin símbolo de moneda) y `disponible`
-     (`true`/`false` para marcar agotados sin borrar el item).
-   - El campo `imagen` apunta a un archivo dentro de `assets/img/items/`.
-     Puedes usar `.jpg`, `.png` o `.webp` (no hace falta que sea `.svg`).
+Tras revisar cinco capturas de Instagram, el usuario eligió Arena y salvia (opción 1) con el botón jamaica de la opción 3. Son tonos adaptados para la web, no colores oficiales extraídos de una guía de marca. Jamaica se reserva para Agregar y Ver pedido; las categorías activas usan salvia suave. WhatsApp conserva verde oscuro.
 
-3. **`assets/img/logo.svg`** y **`assets/img/items/*`**: reemplaza por el
-   logo y las fotos reales del negocio (mismo nombre de archivo o
-   actualizando la ruta en `menu.json`).
+| Función | Color |
+| --- | --- |
+| Fondo crema claro | #FFFCF7 |
+| Tarjetas y superficies arena | #F4EEE5 |
+| Texto cacao | #392E28 |
+| Texto secundario | #65564C |
+| Botones y acento jamaica | #873E4C |
+| Botón presionado | #6D303C |
+| WhatsApp y foco salvia oscuro | #496044 |
+| Categoría activa salvia | #B9C5AC |
+| Bordes y superficies neutras | #DED1BF |
+| No disponible / eliminar | #963B33 |
 
-No es necesario tocar `app.js`, `cart.js`, `menu.js` ni `whatsapp.js` para
-cambiar contenido — esos archivos son la lógica y no deberían editarse salvo
-que quieras cambiar el comportamiento del sitio.
+Texto cacao sobre arena: 11.41:1. Texto crema sobre jamaica: 7.27:1; sobre verde oscuro: 6.75:1. Texto cacao sobre salvia: 7.30:1. Los estados también usan texto, no solo color.
 
-## 3. Cómo probarlo en tu computadora
+## Caché y publicación
 
-El sitio usa `fetch()` para leer `data/menu.json`, así que **no funciona
-abriendo `index.html` con doble clic** (los navegadores bloquean `fetch` en
-archivos locales `file://`). Necesitas un servidor local muy simple. Usa
-cualquiera de estas opciones:
+Se eliminaron ?v=4 y APP_VERSION: imports nativos y enlaces normales, sin valores que sincronizar ni sistema de build. CSS, HTML y JavaScript usan la caché HTTP normal del alojamiento; esto NO garantiza actualización inmediata del HTML ni de los módulos. El menú se solicita con cache: no-store, aunque una pestaña abierta no actualiza su menú automáticamente.
 
-**Con Python (ya viene instalado en Mac/Linux, y en Windows si lo instalaste):**
-```bash
-cd tiendita-desayunos
-python3 -m http.server 8000
-# abre http://localhost:8000 en el navegador
-```
+Después de una publicación autorizada, recargar con Ctrl+F5 y comprobar también una sesión privada. Las pestañas antiguas deben recargarse. No hay service worker. Si se necesita garantizar versiones atómicas para muchos clientes, habrá que incorporar archivos con hash y un proceso de publicación; no se añadió esa complejidad ahora.
 
-**Con Node.js (si lo tienes instalado):**
-```bash
-cd tiendita-desayunos
-npx serve .
-```
+Este repositorio ya tiene remoto. Antes de publicar, revisar git diff, confirmar datos comerciales y probar. Después de autorización se podrán guardar y enviar los cambios al remoto existente y configurar Pages para main y la raíz. Un push a una rama conectada a Pages puede publicar: no hacerlo como simple prueba.
 
-**Con la extensión "Live Server" de VS Code:** clic derecho sobre
-`index.html` → "Open with Live Server".
+## Verificación reproducible
 
-## 4. Publicarlo en GitHub Pages
+Prueba opcional de desarrollo en tests/browser.cjs (no es necesaria para servir el sitio). Requiere Node, Playwright y Edge instalados; no añade dependencias al sitio. Ejecutar node tests/browser.cjs si Playwright está disponible; alternativamente definir PLAYWRIGHT_MODULE con su ruta absoluta. BROWSER_CHANNEL permite elegir otro canal instalado.
 
-1. Crea un repositorio nuevo en GitHub (puede ser público o privado, pero
-   GitHub Pages gratis requiere que sea público, salvo plan de pago).
-2. En tu computadora, dentro de la carpeta `tiendita-desayunos`:
-   ```bash
-   git init
-   git add .
-   git commit -m "Primer commit: estructura inicial del sitio"
-   git branch -M main
-   git remote add origin https://github.com/TU-USUARIO/TU-REPOSITORIO.git
-   git push -u origin main
-   ```
-   > Si `git` no está instalado en tu computadora, descárgalo desde
-   > https://git-scm.com/downloads e instálalo antes de estos pasos.
-3. En GitHub, entra al repositorio → **Settings** → **Pages**.
-4. En "Build and deployment" → "Source", elige **Deploy from a branch**.
-5. En "Branch", elige `main` y la carpeta `/ (root)` → **Save**.
-6. Espera 1-2 minutos. GitHub te dará una URL tipo
-   `https://TU-USUARIO.github.io/TU-REPOSITORIO/`.
+Comprueba 320/390/768/1440 px, JSON, cantidades, total, agotados, foco y Tab, Escape, cierre/reapertura, navegación por desplazamiento, controles táctiles, carrito vacío, fallo de carga y enlace de WhatsApp interceptado. Genera capturas en tests/. No envía mensajes. Probar aparte en un teléfono real y con el número confirmado antes de publicar.
 
-Cada vez que hagas `git push` con cambios (por ejemplo, actualizar precios en
-`menu.json`), el sitio publicado se actualiza solo.
+## Actualización de contenido
 
-## 5. Cómo funciona el pedido por WhatsApp
+Nombre confirmado: Marichef_Cafe. Bebidas: Limonada de Coco y Jamaica-Parchita, ambas a $3 y disponibles; reemplazan café, jugo y malta de ejemplo. Quedan siete productos en total; desayunos y dulces siguen pendientes de confirmación. Mockups generados con image_gen incorporados en assets/img/items/limonada-coco-mockup.png y jamaica-parchita-mockup.png, con etiqueta «Imagen ilustrativa». Para fotos reales, sustituir rutas y quitar imagenIlustrativa. Descripciones basadas en el anuncio adjunto. Número de WhatsApp sigue sin confirmar; no se publicó ni se hizo push.
 
-1. El cliente agrega items del menú al carrito (con cantidad).
-2. Al presionar **"Enviar pedido por WhatsApp"**, el sitio arma un mensaje de
-   texto con el listado de items, cantidades y el total.
-3. Se abre una nueva pestaña hacia `https://wa.me/<numero>?text=<mensaje>`,
-   con el mensaje ya escrito dentro de WhatsApp.
-4. El cliente solo tiene que presionar "Enviar" dentro de WhatsApp para que
-   el pedido llegue a la tienda.
+## Desayunos incorporados
 
-No se necesita ninguna cuenta de WhatsApp Business API ni backend: es el
-enlace público `wa.me` que ofrece WhatsApp.
+Se sustituyeron los cinco alimentos de ejemplo por seis desayunos de las fotos del usuario (dos imágenes duplicadas descartadas). Nombres y descripciones visuales; ingredientes exactos por confirmar. Precios provisionales autorizados: tostada con aguacate $8, sándwich de waffles $10, waffles con huevos $7, waffles con fresas $5, waffles con revuelto y aguacate $9, panquecas con huevos $7. Las dos bebidas se conservan a $3. Total: ocho productos. Imágenes 1200 × 900 WebP con fondo crema/arena editado mediante image_gen; originales y ediciones conservados. Detalles y prompt en assets/img/items/DESAYUNOS.md. No se hizo push ni publicación.
 
-## 6. Próximo paso: diseño visual
+## Actualización: smoothies y recetas
 
-Esta versión está pensada para funcionar correctamente pero con un diseño
-mínimo (`css/styles.css` solo define estructura, no estilo final). El
-siguiente paso del proyecto es generar un archivo de instrucciones para que
-Claude Design defina la identidad visual (colores, tipografía, estilo de las
-tarjetas del menú, etc.) sobre esta misma estructura.
+Descripciones corregidas por el usuario: lechuga; jamón (pavo o ahumado) o tocineta. Se quitó «Bebida aparte» de panquecas. La limonada usa ahora una edición de la cuarta foto real recibida. Se añadieron smoothies proteicos de vainilla, fresa y chocolate y smoothies de frutas de fresa, parchita y mora: seis precios pendientes (null), visibles pero no agregables. Primera y segunda foto asignadas provisionalmente a proteico de vainilla y fresa; chocolate y frutas con placeholder hasta contar con fotos. Total 14 productos. Las fotos editadas son 1200 × 900 WebP, conservando originales. Edición generativa puede alterar detalles de etiquetas. Sin push ni publicación.
+
+## Smoothies: precios e imágenes confirmados
+
+Los seis smoothies cuestan $3.50 y ya se pueden agregar al carrito. Cinco mockups nuevos basados en la textura del proteico de fresa: vainilla, chocolate y frutas de fresa, parchita y mora. Rutas terminadas en -mockup.webp, 1200 × 900, con etiqueta Imagen ilustrativa. La foto editada del proteico de fresa se conserva. Limonada de Coco y Jamaica-Parchita siguen a $3. Prueba actualizada: vainilla + mora suman $7 en carrito y mensaje WhatsApp. Sin publicación ni push.

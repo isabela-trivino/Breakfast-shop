@@ -7,7 +7,7 @@
 
 export const STORE_CONFIG = {
   // Nombre del negocio, se muestra en el header y en el <title>.
-  nombreTienda: "Tiendita de Desayunos",
+  nombreTienda: "Marichef_Cafe",
 
   // Frase corta debajo del nombre (opcional, puede dejarse como "").
   eslogan: "Desayunos saludables, pedidos por WhatsApp",
@@ -17,6 +17,8 @@ export const STORE_CONFIG = {
   // ⚠️ Este es un número de EJEMPLO, reemplázalo por el número real
   // de la tienda antes de publicar el sitio.
   whatsappNumero: "584244000634",
+  // Cambiar a true solo después de confirmar el número real con la tienda.
+  whatsappConfirmado: false,
 
   // Mensaje que aparece al inicio del pedido enviado por WhatsApp.
   mensajeSaludo: "¡Hola! Quisiera hacer el siguiente pedido:",

@@ -3,53 +3,67 @@
   "simboloMoneda": "$",
   "categorias": [
     {
-      "id": "clasicos",
-      "nombre": "Desayunos Clásicos",
+      "id": "desayunos",
+      "nombre": "Desayunos",
       "items": [
         {
-          "id": "d001",
-          "nombre": "Arepa con queso",
-          "descripcion": "Arepa venezolana asada rellena de queso blanco duro.",
-          "precio": 2.5,
-          "imagen": "assets/img/items/Arepa_reina_pepiada.jpg",
+          "id": "b001",
+          "nombre": "Tostada con aguacate",
+          "descripcion": "Pan con huevo, jamón (pavo o ahumado) o tocineta, tomate, lechuga y aguacate.",
+          "precio": 8,
+          "precioProvisional": true,
+          "imagen": "assets/img/items/tostada-aguacate.webp",
+          "imagenEditada": true,
           "disponible": true
         },
         {
-          "id": "d002",
-          "nombre": "Arepa reina pepiada",
-          "descripcion": "Arepa rellena de pollo mechado con aguacate y mayonesa casera.",
-          "precio": 3.5,
-          "imagen": "assets/img/items/Arepa_reina_pepiada.jpg",
+          "id": "b002",
+          "nombre": "Sándwich de waffles",
+          "descripcion": "Waffles dorados con huevo, jamón (pavo o ahumado) o tocineta, aguacate, tomate y lechuga.",
+          "precio": 10,
+          "precioProvisional": true,
+          "imagen": "assets/img/items/waffle-sandwich.webp",
+          "imagenEditada": true,
           "disponible": true
         },
         {
-          "id": "d003",
-          "nombre": "Empanada de queso",
-          "descripcion": "Empanada de maíz frita rellena de queso.",
-          "precio": 1.5,
-          "imagen": "assets/img/items/Arepa_reina_pepiada.jpg",
-          "disponible": true
-        }
-      ]
-    },
-    {
-      "id": "dulces",
-      "nombre": "Dulces y Panadería",
-      "items": [
-        {
-          "id": "d004",
-          "nombre": "Cachito de jamón",
-          "descripcion": "Pan de hojaldre relleno de jamón, horneado y crocante.",
-          "precio": 1.8,
-          "imagen": "assets/img/items/Arepa_reina_pepiada.jpg",
+          "id": "b003",
+          "nombre": "Waffles con huevos revueltos",
+          "descripcion": "Waffles dorados acompañados de huevos revueltos y jamón (pavo o ahumado) o tocineta.",
+          "precio": 7,
+          "precioProvisional": true,
+          "imagen": "assets/img/items/waffles-huevos.webp",
+          "imagenEditada": true,
           "disponible": true
         },
         {
-          "id": "d005",
-          "nombre": "Torta de chocolate (porción)",
-          "descripcion": "Porción individual de torta húmeda de chocolate.",
-          "precio": 2.0,
-          "imagen": "assets/img/items/Arepa_reina_pepiada.jpg",
+          "id": "b004",
+          "nombre": "Waffles con fresas",
+          "descripcion": "Waffles dorados cubiertos con fresas en láminas.",
+          "precio": 5,
+          "precioProvisional": true,
+          "imagen": "assets/img/items/waffles-fresas.webp",
+          "imagenEditada": true,
+          "disponible": true
+        },
+        {
+          "id": "b005",
+          "nombre": "Waffles con revuelto y aguacate",
+          "descripcion": "Waffles acompañados de huevos revueltos con jamón (pavo o ahumado) o tocineta y aguacate.",
+          "precio": 9,
+          "precioProvisional": true,
+          "imagen": "assets/img/items/waffles-aguacate.webp",
+          "imagenEditada": true,
+          "disponible": true
+        },
+        {
+          "id": "b006",
+          "nombre": "Panquecas con huevos revueltos",
+          "descripcion": "Panquecas doradas con huevos revueltos y jamón (pavo o ahumado) o tocineta.",
+          "precio": 7,
+          "precioProvisional": true,
+          "imagen": "assets/img/items/panquecas-huevos.webp",
+          "imagenEditada": true,
           "disponible": true
         }
       ]
@@ -59,28 +73,76 @@
       "nombre": "Bebidas",
       "items": [
         {
-          "id": "d006",
-          "nombre": "Café con leche",
-          "descripcion": "Café negro con leche caliente, tamaño mediano.",
-          "precio": 1.5,
-          "imagen": "assets/img/items/Cafe_Con_Leche.jpg",
+          "id": "d009",
+          "nombre": "Limonada de Coco",
+          "descripcion": "El balance perfecto entre lo cremoso del coco y el toque cítrico del limón.",
+          "precio": 3,
+          "imagen": "assets/img/items/limonada-coco-real.webp",
+          "disponible": true,
+          "imagenEditada": true
+        },
+        {
+          "id": "d010",
+          "nombre": "Jamaica-Parchita",
+          "descripcion": "Exótica, vibrante y con el balance frutal que te encanta.",
+          "precio": 3,
+          "imagen": "assets/img/items/jamaica-parchita-mockup.png",
+          "disponible": true,
+          "imagenIlustrativa": true
+        },
+        {
+          "id": "p001",
+          "nombre": "Smoothie Proteico de Vainilla",
+          "descripcion": "Smoothie proteico sabor vainilla.",
+          "precio": 3.5,
+          "imagen": "assets/img/items/proteico-vainilla-mockup.webp",
+          "disponible": true,
+          "imagenIlustrativa": true
+        },
+        {
+          "id": "p002",
+          "nombre": "Smoothie Proteico de Fresa",
+          "descripcion": "Smoothie proteico sabor fresa.",
+          "precio": 3.5,
+          "imagen": "assets/img/items/proteico-fresa.webp",
+          "imagenEditada": true,
           "disponible": true
         },
         {
-          "id": "d007",
-          "nombre": "Jugo de naranja natural",
-          "descripcion": "Jugo de naranja recién exprimido, tamaño mediano.",
-          "precio": 2.0,
-          "imagen": "assets/img/items/zumo-de-naranja-natural.jpg",
-          "disponible": true
+          "id": "p003",
+          "nombre": "Smoothie Proteico de Chocolate",
+          "descripcion": "Smoothie proteico sabor chocolate.",
+          "precio": 3.5,
+          "imagen": "assets/img/items/proteico-chocolate-mockup.webp",
+          "disponible": true,
+          "imagenIlustrativa": true
         },
         {
-          "id": "d008",
-          "nombre": "Malta",
-          "descripcion": "Bebida de malta bien fría, lata 355ml.",
-          "precio": 1.2,
-          "imagen": "assets/img/items/Arepa_reina_pepiada.jpg",
-          "disponible": false
+          "id": "f001",
+          "nombre": "Smoothie de Fresa",
+          "descripcion": "Smoothie de frutas: fresa.",
+          "precio": 3.5,
+          "imagen": "assets/img/items/frutas-fresa-mockup.webp",
+          "disponible": true,
+          "imagenIlustrativa": true
+        },
+        {
+          "id": "f002",
+          "nombre": "Smoothie de Parchita",
+          "descripcion": "Smoothie de frutas: parchita.",
+          "precio": 3.5,
+          "imagen": "assets/img/items/frutas-parchita-mockup.webp",
+          "disponible": true,
+          "imagenIlustrativa": true
+        },
+        {
+          "id": "f003",
+          "nombre": "Smoothie de Mora",
+          "descripcion": "Smoothie de frutas: mora.",
+          "precio": 3.5,
+          "imagen": "assets/img/items/frutas-mora-mockup.webp",
+          "disponible": true,
+          "imagenIlustrativa": true
         }
       ]
     }

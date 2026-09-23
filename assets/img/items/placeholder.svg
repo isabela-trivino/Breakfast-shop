@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150">
   <!-- Imagen placeholder de item: reemplaza por foto real del producto (jpg/png/webp) -->
-  <rect width="200" height="150" fill="#EFE6D8"/>
+  <rect width="200" height="150" fill="#DED1BF"/>
   <text x="100" y="80" font-size="40" text-anchor="middle" font-family="sans-serif">🍽️</text>
-  <text x="100" y="115" font-size="11" text-anchor="middle" font-family="sans-serif" fill="#8A7B66">Foto próximamente</text>
+  <text x="100" y="115" font-size="11" text-anchor="middle" font-family="sans-serif" fill="#65564C">Foto próximamente</text>
 </svg>

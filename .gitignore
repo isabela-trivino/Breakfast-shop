@@ -21,3 +21,15 @@ node_modules/
 .gemini/
 .impeccable/
 skills-lock.json
+
+# Capturas generadas por la prueba de navegador
+tests/*.png
+
+# Fuentes de imagen locales: el sitio usa las versiones finales optimizadas
+assets/img/items/*-original.png
+assets/img/items/*-edit.png
+assets/img/items/proteico-vainilla-mockup.png
+assets/img/items/proteico-chocolate-mockup.png
+assets/img/items/frutas-*-mockup.png
+assets/img/items/limonada-coco-mockup.png
+assets/img/items/proteico-vainilla.webp

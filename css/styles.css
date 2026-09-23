@@ -11,27 +11,28 @@
    ========================================================================== */
 
 :root {
-  /* --- Paleta (placeholder, pensada para reemplazar) --- */
-  --color-bg: #FFFBF5;
-  --color-surface: #FFFFFF;
-  --color-text: #2B2118;
-  --color-text-muted: #8A7B66;
-  --color-primary: #F4A83D;
-  --color-primary-dark: #D98C1F;
-  --color-accent: #E85D42;
-  --color-whatsapp: #25D366;
-  --color-border: #EFE6D8;
-  --color-danger: #C0392B;
+  /* --- Paleta elegida: arena y salvia con botones jamaica --- */
+  --color-bg: #FFFCF7;
+  --color-surface: #F4EEE5;
+  --color-text: #392E28;
+  --color-text-muted: #65564C;
+  --color-primary: #873E4C;
+  --color-primary-dark: #6D303C;
+  --color-accent: #873E4C;
+  --color-whatsapp: #496044;
+  --color-border: #DED1BF;
+  --color-sage: #B9C5AC;
+  --color-danger: #963B33;
 
   /* Tokens añadidos (hallazgo #9): texto/fondos que antes estaban
      hard-codeados como blanco/negro literal fuera del sistema de tokens. */
-  --color-on-primary: #FFFFFF;
-  --color-on-accent: #FFFFFF;
-  --color-on-whatsapp: #FFFFFF;
+  --color-on-primary: #FFFCF7;
+  --color-on-accent: #FFFCF7;
+  --color-on-whatsapp: #FFFCF7;
   --color-overlay: rgba(0, 0, 0, 0.4);
-  --color-fab-count-bg: rgba(255, 255, 255, 0.25);
-  --color-skeleton-base: #EFE6D8;
-  --color-skeleton-shine: #FBF4E8;
+  --color-fab-count-bg: rgba(255, 255, 255, 0.10);
+  --color-skeleton-base: #DED1BF;
+  --color-skeleton-shine: #F5EEE3;
 
   /* --- Tipografía --- */
   --font-base: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -48,12 +49,12 @@
   --radius-sm: 6px;
   --radius-md: 12px;
   --radius-lg: 20px;
-  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-card: none;
   --shadow-panel: 0 8px 30px rgba(0, 0, 0, 0.18);
 
   /* --- Layout --- */
   --header-height: 88px;
-  --container-max: 960px;
+  --container-max: 1120px;
   /* Alto real aproximado de .category-nav (usado por scroll-margin-top,
      hallazgo #3). Si cambias el padding de .category-nav-inner, ajusta esto. */
   --category-nav-height: 60px;
@@ -164,9 +165,9 @@ h1, h2, h3, p { margin: 0; }
 }
 .category-nav-button:active { transform: scale(0.96); }
 .category-nav-button[aria-current="true"] {
-  background: var(--color-primary);
-  border-color: var(--color-primary);
-  color: var(--color-on-primary);
+  background: var(--color-sage);
+  border-color: var(--color-sage);
+  color: var(--color-text);
 }
 
 /* --- Menú --- */
@@ -205,11 +206,11 @@ h1, h2, h3, p { margin: 0; }
 .menu-item-name { font-size: 1.05rem; }
 .menu-item-description { color: var(--color-text-muted); font-size: 0.88rem; flex: 1; }
 .menu-item-footer { display: flex; align-items: center; justify-content: space-between; gap: var(--space-sm); flex-wrap: wrap; }
-.menu-item-price { font-weight: 700; color: var(--color-primary-dark); }
+.menu-item-price { font-weight: 700; color: var(--color-text); }
 .menu-item-actions { display: flex; align-items: center; gap: var(--space-sm); }
 .menu-item-unavailable { color: var(--color-danger); font-size: 0.85rem; font-weight: 600; }
 
-.menu-item.is-unavailable { opacity: 0.55; }
+.menu-item.is-unavailable .menu-item-image { filter: grayscale(1); }
 .menu-item.is-unavailable .menu-item-actions { display: none; }
 
 /* --- Skeleton loader (hallazgo #13) --- */
@@ -459,3 +460,67 @@ h1, h2, h3, p { margin: 0; }
   .brand-text h1 { font-size: 1rem; }
   .tagline { display: none; }
 }
+
+/* Identidad elegida: arena y salvia; jamaica destaca las acciones principales. */
+h1, h2, .menu-item-name { font-family: Georgia, "Times New Roman", serif; font-weight: 400; text-wrap: balance; }
+button { color: inherit; }
+:focus-visible { outline: 3px solid var(--color-whatsapp); outline-offset: 4px; }
+.skip-link { position: fixed; top: 8px; left: 8px; z-index: 40; padding: 12px; background: var(--color-surface); color: var(--color-text); transform: translateY(-150%); }
+.skip-link:focus { transform: none; }
+.header-inner { padding-block: 24px; }
+.brand-text h1 { font-size: clamp(1.4rem, 3vw, 2rem); }
+.brand-logo { background: #DED1BF; }
+.menu-intro { padding: 28px 0 40px; max-width: 640px; }
+.eyebrow { color: var(--color-whatsapp); font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; }
+.menu-intro h2 { font-size: clamp(2.5rem, 6vw, 4.3rem); line-height: 1.08; letter-spacing: -.045em; margin: 12px 0 20px; }
+.menu-intro > p:last-child { color: var(--color-text-muted); max-width: 440px; }
+.category-nav-button { min-height: 44px; min-width: 44px; text-decoration: none; display: inline-flex; align-items: center; border-radius: 6px; }
+.category-nav-inner { mask-image: none; -webkit-mask-image: none; }
+.menu-section-title { font-size: 2rem; border: 0; display: block; margin-bottom: 20px; }
+.menu-section { margin-bottom: 52px; scroll-margin-top: 80px; }
+.menu-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.menu-item { border: 0; border-radius: 12px; }
+.menu-item-image { height: auto; aspect-ratio: 4 / 3; }
+.menu-item-body { padding: 20px; gap: 12px; }
+.menu-item-name { font-size: 1.4rem; line-height: 1.2; }
+.menu-item-description { font-size: .92rem; }
+.menu-item-footer { align-items: flex-start; flex-direction: column; gap: 14px; }
+.menu-item-actions { width: 100%; justify-content: space-between; flex-wrap: wrap; }
+.menu-item-price, .qty-value, .cart-total-row, .cart-item-subtotal { font-variant-numeric: tabular-nums; }
+.qty-stepper { border-color: #9C8A77; }
+.qty-btn { flex-shrink: 0; color: var(--color-text); }
+.add-button, .cart-fab { min-height: 44px; min-width: 44px; }
+.add-button { color: var(--color-on-primary); }
+.cart-fab { min-height: 56px; padding: 12px 20px; color: var(--color-on-accent); }
+.cart-fab-label { display: inline; }
+.cart-panel { width: min(420px, 100%); }
+.cart-panel-header h2 { font-size: 2rem; }
+.cart-panel-body { min-height: 0; overscroll-behavior: contain; }
+.cart-panel-footer { background: var(--color-bg); }
+.whatsapp-button { color: var(--color-on-whatsapp); }
+.whatsapp-button:disabled { opacity: 1; background: #DED1BF; color: #65564C; }
+.whatsapp-button:disabled .whatsapp-icon { filter: none; }
+.cart-disclaimer { font-size: .82rem; }
+.site-footer { padding-bottom: 100px; }
+@media (hover: hover) {
+  .add-button:hover { background: var(--color-primary-dark); }
+  .qty-btn:hover, .icon-button:hover, .cart-item-remove:hover { background: var(--color-border); }
+  .category-nav-button:hover { border-color: var(--color-primary); }
+}
+@media (max-width: 850px) { .menu-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) {
+  .container { padding-inline: 16px; }
+  .header-inner { padding-block: 20px; }
+  .menu-grid { grid-template-columns: 1fr; gap: 20px; }
+  .menu-intro { padding-block: 16px 32px; }
+  .menu-item-image { height: auto; aspect-ratio: 16 / 10; }
+  .menu-section-title { font-size: 1.8rem; }
+  .cart-fab { left: 16px; right: 16px; justify-content: center; }
+  .cart-panel { width: 100%; }
+  .tagline { display: block; }
+}
+
+.image-caption { padding: 6px 16px 0; font-size: .75rem; color: var(--color-text-muted); }
+
+/* Fotografías completas: mismo encuadre 4:3 en teléfono y escritorio. */
+.menu-item-image { aspect-ratio: 4 / 3; height: auto; }

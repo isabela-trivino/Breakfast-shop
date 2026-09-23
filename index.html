@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tiendita de Desayunos — Menú y Pedidos por WhatsApp</title>
+  <title>Marichef_Cafe — Menú y Pedidos por WhatsApp</title>
   <meta name="description" content="Menú de desayunos. Elige tus items y envía tu pedido directo por WhatsApp." />
 
   <!-- Open Graph / previsualización al compartir el link (hallazgo #10) —
        clave porque el negocio depende de compartir este link por WhatsApp.
        Actualiza estas 3 líneas si cambia el nombre/logo real de la tienda. -->
-  <meta property="og:title" content="Tiendita de Desayunos" />
+  <meta property="og:title" content="Marichef_Cafe" />
   <meta property="og:description" content="Elige tu desayuno y envía tu pedido directo por WhatsApp." />
   <meta property="og:image" content="assets/img/og-image.png" />
   <meta property="og:type" content="website" />
@@ -17,16 +17,14 @@
 
   <!-- Color de la barra del navegador en Android/Chrome (hallazgo #16).
        Debe coincidir con --color-primary de styles.css. -->
-  <meta name="theme-color" content="#F4A83D" />
+  <meta name="theme-color" content="#FFFCF7" />
 
   <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml" />
-  <!-- 🔖 "?v=4" fuerza a refrescar la caché del navegador. Súbelo (v=5, v=6…)
-       cada vez que publiques cambios en styles.css o en cualquier .js,
-       y sube el mismo número en js/app.js (ver comentario ahí — ahora es
-       solo 1 lugar en ese archivo, ver hallazgo #15 del AUDIT.md). -->
-  <link rel="stylesheet" href="css/styles.css?v=4" />
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
+  <a class="skip-link" href="#menu-container">Saltar al menú</a>
+  <p id="order-status" class="sr-only" role="status"></p>
 
   <!-- ============================ HEADER ============================ -->
   <header class="site-header" id="site-header">
@@ -34,7 +32,7 @@
       <div class="brand">
         <img class="brand-logo" src="assets/img/logo.svg" alt="" width="48" height="48" />
         <div class="brand-text">
-          <h1 id="store-name">Tiendita de Desayunos</h1>
+          <h1 id="store-name">Marichef_Cafe</h1>
           <p id="store-tagline" class="tagline">Desayunos frescos, pedidos por WhatsApp</p>
         </div>
       </div>
@@ -49,7 +47,8 @@
   </nav>
 
   <!-- ============================= MENÚ ============================= -->
-  <main class="container" id="menu-container">
+  <main class="container" id="menu-container" tabindex="-1">
+    <div class="menu-intro"><p class="eyebrow">A tu gusto</p><h2>Tu mañana empieza<br>con algo rico.</h2><p>Elige tu desayuno, revisa el total y prepara tu pedido por WhatsApp.</p></div>
     <!-- role="status" queda en un elemento visualmente oculto: el texto se
          sigue anunciando a lectores de pantalla mientras carga (hallazgo
          #13), pero visualmente se ve el skeleton de abajo. -->
@@ -134,8 +133,9 @@
       </div>
       <button id="cart-whatsapp-btn" class="whatsapp-button" type="button" disabled>
         <img src="assets/icons/whatsapp.svg" alt="" class="whatsapp-icon" aria-hidden="true" />
-        Enviar pedido por WhatsApp
+        Preparar pedido en WhatsApp
       </button>
+      <p id="whatsapp-status" class="cart-disclaimer" role="status">Pedidos por WhatsApp pendientes de activar: falta confirmar el número de la tienda.</p>
       <p class="cart-disclaimer">
         Al presionar el botón se abrirá WhatsApp con tu pedido ya escrito.
         Debes enviarlo tú mismo para confirmarlo con la tienda.
@@ -146,7 +146,7 @@
   <!-- ============================ FOOTER ============================ -->
   <footer class="site-footer">
     <div class="container">
-      <p>© <span id="footer-year"></span> <span id="footer-store-name">Tiendita de Desayunos</span>. Hecho con ❤ para pedidos rápidos.</p>
+      <p>© <span id="footer-year"></span> <span id="footer-store-name">Marichef_Cafe</span>. Pedidos preparados por ti, confirmados con la tienda.</p>
     </div>
   </footer>
 
@@ -197,6 +197,6 @@
     </li>
   </template>
 
-  <script type="module" src="js/app.js?v=4"></script>
+  <script type="module" src="js/app.js"></script>
 </body>
 </html>
